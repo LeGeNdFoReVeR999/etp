@@ -1,7 +1,7 @@
 import gradio as gr
 import random
+import os
 
-# Some motivational quotes and relaxation tips
 quotes = [
     "Believe in yourself, you are stronger than you think.",
     "Every day may not be good, but there’s something good in every day.",
@@ -18,25 +18,22 @@ tips = [
 
 def wellness_bot(message, history=[]):
     message = message.lower()
-
-    # Simple intent-based responses
     if "stress" in message or "anxious" in message:
         response = random.choice(tips)
     elif "sad" in message or "depressed" in message:
-        response = "I’m sorry you’re feeling this way. Remember, it’s okay to ask for help. 💙 You can call a friend or a helpline if it feels overwhelming."
+        response = ("I’m sorry you’re feeling this way 💙. "
+                    "Remember, it’s okay to ask for help. "
+                    "You can call a friend or a helpline if it feels overwhelming.")
     elif "motivate" in message or "inspire" in message:
         response = random.choice(quotes)
     elif "hello" in message or "hi" in message:
         response = "Hello 👋 I’m your Wellness Assistant. How are you feeling today?"
     else:
-        response = "I hear you. Remember, you are not alone. 🌸 Would you like a relaxation tip or a motivational quote?"
-
+        response = "I hear you 🌸. Would you like a relaxation tip or a motivational quote?"
     return response
 
-# Create chatbot UI
 chatbot = gr.ChatInterface(fn=wellness_bot, title="🌱 Mental Wellness Assistant")
 
-# Launch app
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8080))  # use Render's PORT
     chatbot.launch(server_name="0.0.0.0", server_port=port)
